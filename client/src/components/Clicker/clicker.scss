@@ -1,0 +1,21 @@
+.clicker {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin-top: 100px;
+}
+
+.clicker__button {
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.clicker__big-spot {
+	position: absolute;
+	top: 0;
+	left: 0%;
+	z-index: -1;
+
+}
