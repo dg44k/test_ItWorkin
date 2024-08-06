@@ -11,3 +11,5 @@ export interface GameContextType {
   handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   taps: Array<{x: number, y: number, value: number}>;
 }
+
+// export type 
