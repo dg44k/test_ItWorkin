@@ -27,17 +27,17 @@ export const GameProvider = ({ children }: GameContextProps) => {
   const [taps, setTaps] = useState<{ x: number; y: number; value: number }[]>(
     []
   );
-  const [touchCount, setTouchCount] = useState(0);
+  // const [touchCount, setTouchCount] = useState(0);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-      setTouchCount(event.touches.length);
-    };
+    // const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    //   setTouchCount(event.touches.length);
+    // };
   
-    const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-      setTouchCount(event.touches.length);
-    }
-    console.log(touchCount)
+    // const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    //   setTouchCount(event.touches.length);
+    // }
+    // console.log(touchCount)
     if (energy.valueEnergy > 0) {
       setCoin((prevCoins) => prevCoins + 1);
 
