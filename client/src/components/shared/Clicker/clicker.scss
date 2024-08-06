@@ -16,3 +16,17 @@
 .clicker__image-hero {
 	width: 100%;
 }
+
+.clicker__tap-indicator {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  font-size: 14px;
+}
