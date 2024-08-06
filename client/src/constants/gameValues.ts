@@ -1,0 +1,3 @@
+export const START_VALUE_COIN = 0;
+export const START_VALUE_ENERGY = 1000;
+export const START_VALUE_PERCENT_ENERGY = 100;
