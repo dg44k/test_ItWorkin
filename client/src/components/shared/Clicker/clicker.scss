@@ -1,21 +1,18 @@
 .clicker {
+	flex-grow: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	position: relative;
-	margin-top: 100px;
+	margin-top: 10%;
 }
 
 .clicker__button {
   background: none;
   outline: none;
   border: none;
+	width: 70%;
 }
 
-.clicker__big-spot {
-	position: absolute;
-	top: 0;
-	left: 0%;
-	z-index: -1;
-
+.clicker__image-hero {
+	width: 100%;
 }

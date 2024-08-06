@@ -1,0 +1,10 @@
+.energy-bar {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.energy-bar__title {
+	font-size: 16px;
+	color: #fff
+}

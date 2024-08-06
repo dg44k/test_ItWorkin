@@ -1,6 +1,7 @@
-@import "./Counter/counter.scss";
-@import "./Container/container.scss";
-@import "./Clicker/clicker.scss";
+@import "./shared/Counter/counter.scss";
+@import "./shared/Container/container.scss";
+@import "./shared/Clicker/clicker.scss";
+@import "./shared/EnergyBar/energy-bar.scss";
 
 * {
   margin: 0;
@@ -9,6 +10,6 @@
 }
 
 body {
-  background-color: #22001b;
+  background: linear-gradient(45deg,#22001b, #CB10AC); 
 	font-family: "Noto Sans JP", sans-serif;
 }
