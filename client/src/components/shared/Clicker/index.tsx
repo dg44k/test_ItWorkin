@@ -4,13 +4,28 @@ import GameContext from "../Context/GameContext/GameContext";
 import "./clicker.scss";
 
 export const Clicker: React.FC = () => {
-  const { handleClick } = useContext(GameContext);
+  const { handleClick, taps } = useContext(GameContext);
 
   return (
     <div className="clicker">
       <button className="clicker__button" onClick={handleClick}>
         <ImageHeroFruit />
       </button>
+      {taps.length > 0 &&
+        taps.map((tap) => (
+          <div
+            key={tap.id}
+            className="clicker__tap-indicator"
+            style={{
+              left: `${tap.x}px`,
+              top: `${tap.y}px`,
+              transform: "translate(-50%, -50%)",
+              position: "absolute",
+            }}
+          >
+            +1
+          </div>
+        ))}
     </div>
   );
 };

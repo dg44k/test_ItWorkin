@@ -1,10 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import {
   START_VALUE_COIN,
   START_VALUE_ENERGY,
   START_VALUE_PERCENT_ENERGY,
 } from "src/constants/gameValues";
-import { GameContextProps, GameContextType } from "./types";
+import { GameContextProps, GameContextType, TapIndicator } from "./types";
+
 
 const initialState: GameContextType = {
   coin: START_VALUE_COIN,
@@ -13,21 +14,19 @@ const initialState: GameContextType = {
     valueEnergyPercent: START_VALUE_PERCENT_ENERGY,
   },
   handleClick: () => {},
+  taps: [],
 };
 
 const GameContext = createContext<GameContextType>(initialState);
 
 export const GameProvider = ({ children }: GameContextProps) => {
-  const [coin, setCoin] = useState(START_VALUE_COIN);
-  const [energy, setEnergy] = useState({
-    valueEnergy: START_VALUE_ENERGY,
-    valueEnergyPercent: START_VALUE_PERCENT_ENERGY,
-  });
+  const [coin, setCoin] = useState(initialState.coin);
+  const [energy, setEnergy] = useState(initialState.energy);
+  const [taps, setTaps] = useState<TapIndicator[]>([]);
 
-  const handleClick = () => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     if (energy.valueEnergy > 0) {
       setCoin((prevCoins) => prevCoins + 1);
-
       setEnergy((prevEnergy) => {
         const newValueEnergy = prevEnergy.valueEnergy - 1;
         const newValueEnergyPercent = Math.floor(
@@ -39,13 +38,27 @@ export const GameProvider = ({ children }: GameContextProps) => {
           valueEnergyPercent: newValueEnergyPercent,
         };
       });
+
+      const rect = event.currentTarget.getBoundingClientRect();
+      
+      const newTap = {
+        id: Date.now(),
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top + 100,
+      };
+
+      setTaps((prevTaps) => [...prevTaps, newTap]);
+
+      setTimeout(() => {
+        setTaps((prevTaps) => prevTaps.filter((tap) => tap.id !== newTap.id));
+      }, 2000);
     }
-  };
+  }, [energy.valueEnergy]);
 
   useEffect(() => {
     const energyInterval = setInterval(() => {
-      if (energy.valueEnergy < START_VALUE_ENERGY) {
-        setEnergy((prevEnergy) => {
+      setEnergy((prevEnergy) => {
+        if (prevEnergy.valueEnergy < START_VALUE_ENERGY) {
           const newValueEnergy = prevEnergy.valueEnergy + 1;
           const newValueEnergyPercent = Math.floor(
             (newValueEnergy * 100) / START_VALUE_ENERGY
@@ -55,12 +68,13 @@ export const GameProvider = ({ children }: GameContextProps) => {
             valueEnergy: newValueEnergy,
             valueEnergyPercent: newValueEnergyPercent,
           };
-        });
-      }
+        }
+        return prevEnergy;
+      });
     }, 1000);
 
     return () => clearInterval(energyInterval);
-  }, [energy]);
+  }, []);
 
   useEffect(() => {
     const coinsInterval = setInterval(() => {
@@ -76,6 +90,7 @@ export const GameProvider = ({ children }: GameContextProps) => {
         coin,
         energy,
         handleClick,
+        taps,
       }}
     >
       {children}

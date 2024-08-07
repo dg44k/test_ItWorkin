@@ -1,24 +1,60 @@
 .clicker {
-	flex-grow: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 10%;
-	background: none;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  margin-top: 10%;
+  background: none;
 }
 
 .clicker__button {
   background: none;
   outline: none;
   border: none;
-	width: 70%;
-	transform: scale(1);
+  width: 70%;
+  transform: scale(1);
 
-	transition: 0.2s ease-in-out;
-	-webkit-tap-highlight-color: transparent;
+  transition: 0.2s ease-in-out;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .clicker__button:active {
-	transform: scale(1.1);
-	filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.5));
+  transform: scale(1.1);
+  filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.5));
+}
+
+@keyframes show_tap {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.clicker__tap-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: url("../../../assets/little_spot_tap.png") no-repeat;
+  background-size: 100%;
+  color: #fff;
+  pointer-events: none;
+  font-size: 35px;
+  font-weight: 900;
+  animation: show_tap 2s forwards;
 }
