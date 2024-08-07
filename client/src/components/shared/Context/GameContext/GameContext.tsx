@@ -13,7 +13,6 @@ const initialState: GameContextType = {
     valueEnergyPercent: START_VALUE_PERCENT_ENERGY,
   },
   handleClick: () => {},
-  taps: [],
 };
 
 const GameContext = createContext<GameContextType>(initialState);
@@ -24,26 +23,10 @@ export const GameProvider = ({ children }: GameContextProps) => {
     valueEnergy: START_VALUE_ENERGY,
     valueEnergyPercent: START_VALUE_PERCENT_ENERGY,
   });
-  const [taps, setTaps] = useState<{ x: number; y: number; value: number }[]>(
-    []
-  );
-  // const [touchCount, setTouchCount] = useState(0);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    //   setTouchCount(event.touches.length);
-    // };
-  
-    // const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    //   setTouchCount(event.touches.length);
-    // }
-    // console.log(touchCount)
+  const handleClick = () => {
     if (energy.valueEnergy > 0) {
       setCoin((prevCoins) => prevCoins + 1);
-
-      const { clientX: x, clientY: y } = event;
-
-      setTaps((prevTaps) => [...prevTaps, { x, y, value: 1 }]);
 
       setEnergy((prevEnergy) => {
         const newValueEnergy = prevEnergy.valueEnergy - 1;
@@ -93,7 +76,6 @@ export const GameProvider = ({ children }: GameContextProps) => {
         coin,
         energy,
         handleClick,
-        taps,
       }}
     >
       {children}

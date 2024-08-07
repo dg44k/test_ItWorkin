@@ -8,8 +8,5 @@ export interface GameContextType {
     valueEnergy: number;
     valueEnergyPercent: number;
   };
-  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  taps: Array<{x: number, y: number, value: number}>;
+  handleClick: () => void;
 }
-
-// export type 
