@@ -27,7 +27,7 @@ export const GameProvider = ({ children }: GameContextProps) => {
       if (energy.valueEnergy > 0) {
         setCoin((prevCoins: number) => prevCoins + lengthMultiTap);
         setEnergy((prevEnergy) => {
-          const newValueEnergy = prevEnergy.valueEnergy - lengthMultiTap;
+          const newValueEnergy = Math.max(prevEnergy.valueEnergy - lengthMultiTap, 0);
           const newValueEnergyPercent = Math.floor(
             (newValueEnergy * 100) / constantsValues.START_VALUE_ENERGY
           );
