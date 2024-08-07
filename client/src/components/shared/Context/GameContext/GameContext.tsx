@@ -44,7 +44,7 @@ export const GameProvider = ({ children }: GameContextProps) => {
       const newTap = {
         id: Date.now(),
         x: event.clientX - rect.left,
-        y: event.clientY - rect.top + 100,
+        y: event.clientY - rect.top,
       };
 
       setTaps((prevTaps) => [...prevTaps, newTap]);
