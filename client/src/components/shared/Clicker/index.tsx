@@ -1,15 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ImageHeroFruit from "@assets/hero-fruit.svg";
 import GameContext from "../Context/GameContext/GameContext";
 import "./clicker.scss";
 
 export const Clicker: React.FC = () => {
-  const { handleClick, taps } = useContext(GameContext);
-  const [lengthMultiTap, setLengthMultiTap] = useState(1);
-
-  const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
-    setLengthMultiTap(e.changedTouches.length);
-  }
+  const { handleClick, taps, handleTouch, lengthMultiTap } = useContext(GameContext);
 
   return (
     <div className="clicker">
@@ -28,7 +23,7 @@ export const Clicker: React.FC = () => {
               position: "absolute",
             }}
           >
-            +{lengthMultiTap}
+            +{lengthMultiTap || 1}
           </div>
         ))}
     </div>

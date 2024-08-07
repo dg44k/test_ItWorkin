@@ -13,7 +13,9 @@ const initialState: GameContextType = {
     valueEnergy: START_VALUE_ENERGY,
     valueEnergyPercent: START_VALUE_PERCENT_ENERGY,
   },
+  handleTouch: () => {},
   handleClick: () => {},
+  lengthMultiTap: 1,
   taps: [],
 };
 
@@ -23,12 +25,17 @@ export const GameProvider = ({ children }: GameContextProps) => {
   const [coin, setCoin] = useState(initialState.coin);
   const [energy, setEnergy] = useState(initialState.energy);
   const [taps, setTaps] = useState<TapIndicator[]>([]);
+  const [lengthMultiTap, setLengthMultiTap] = useState(initialState.lengthMultiTap);
+
+  const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
+    setLengthMultiTap(e.changedTouches.length);
+  }
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     if (energy.valueEnergy > 0) {
-      setCoin((prevCoins) => prevCoins + 1);
+      setCoin((prevCoins) => prevCoins + lengthMultiTap);
       setEnergy((prevEnergy) => {
-        const newValueEnergy = prevEnergy.valueEnergy - 1;
+        const newValueEnergy = prevEnergy.valueEnergy - lengthMultiTap;
         const newValueEnergyPercent = Math.floor(
           (newValueEnergy * 100) / START_VALUE_ENERGY
         );
@@ -37,10 +44,9 @@ export const GameProvider = ({ children }: GameContextProps) => {
           valueEnergy: newValueEnergy,
           valueEnergyPercent: newValueEnergyPercent,
         };
-      });
+      });    
 
       const rect = event.currentTarget.getBoundingClientRect();
-      
       const newTap = {
         id: Date.now(),
         x: event.clientX - rect.left,
@@ -53,7 +59,7 @@ export const GameProvider = ({ children }: GameContextProps) => {
         setTaps((prevTaps) => prevTaps.filter((tap) => tap.id !== newTap.id));
       }, 2000);
     }
-  }, [energy.valueEnergy]);
+  }, [energy.valueEnergy, lengthMultiTap]);
 
   useEffect(() => {
     const energyInterval = setInterval(() => {
@@ -90,6 +96,8 @@ export const GameProvider = ({ children }: GameContextProps) => {
         coin,
         energy,
         handleClick,
+        handleTouch,
+        lengthMultiTap,
         taps,
       }}
     >

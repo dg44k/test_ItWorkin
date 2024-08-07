@@ -16,5 +16,7 @@ export interface GameContextType {
     valueEnergyPercent: number;
   };
   handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleTouch: (e: React.TouchEvent<HTMLButtonElement>) => void;
+  lengthMultiTap: number;
   taps: TapIndicator[];
 }
