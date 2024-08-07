@@ -9,15 +9,12 @@ export interface TapIndicator {
   count: number;
 }
 
-
 export interface GameContextType {
   coin: number;
   energy: {
     valueEnergy: number;
     valueEnergyPercent: number;
   };
-  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleTouch: (e: React.TouchEvent<HTMLButtonElement>) => void;
-  lengthMultiTap: number;
   taps: TapIndicator[];
 }
