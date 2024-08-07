@@ -28,7 +28,7 @@ export const GameProvider = ({ children }: GameContextProps) => {
   const [lengthMultiTap, setLengthMultiTap] = useState(initialState.lengthMultiTap);
 
   const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
-    setLengthMultiTap(e.changedTouches.length);
+    setLengthMultiTap(e.touches.length);
   }
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
