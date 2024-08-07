@@ -8,6 +8,7 @@ export const Clicker: React.FC = () => {
 
   return (
     <div className="clicker">
+      <h1>{lengthMultiTap}</h1>
       <button className="clicker__button" onClick={handleClick} onTouchStart={handleTouch}>
         <ImageHeroFruit />
       </button>
