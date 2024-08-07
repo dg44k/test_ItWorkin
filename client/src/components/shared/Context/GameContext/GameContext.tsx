@@ -6,7 +6,6 @@ import {
 } from "src/constants/gameValues";
 import { GameContextProps, GameContextType, TapIndicator } from "./types";
 
-
 const initialState: GameContextType = {
   coin: START_VALUE_COIN,
   energy: {
@@ -29,7 +28,15 @@ export const GameProvider = ({ children }: GameContextProps) => {
 
   const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
     setLengthMultiTap(e.touches.length);
-  }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const newTap = {
+      id: Date.now() + Math.random(),
+      x: e.touches[1].clientX - rect.left,
+      y: e.touches[1].clientY - rect.top,
+      count: e.touches.length,
+    };
+    setTaps([...taps, newTap]);
+  };
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     if (energy.valueEnergy > 0) {
@@ -44,13 +51,14 @@ export const GameProvider = ({ children }: GameContextProps) => {
           valueEnergy: newValueEnergy,
           valueEnergyPercent: newValueEnergyPercent,
         };
-      });    
+      });
 
       const rect = event.currentTarget.getBoundingClientRect();
-      const newTap = {
-        id: Date.now(),
+      const newTap: TapIndicator = {
+        id: Date.now() + Math.random(), // уникальный ID
         x: event.clientX - rect.left,
         y: event.clientY - rect.top,
+        count: 1,
       };
 
       setTaps((prevTaps) => [...prevTaps, newTap]);

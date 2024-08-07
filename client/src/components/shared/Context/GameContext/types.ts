@@ -6,6 +6,7 @@ export interface TapIndicator {
   id: number;
   x: number;
   y: number;
+  count: number;
 }
 
 
