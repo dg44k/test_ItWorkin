@@ -1,39 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ImageHeroFruit from "@assets/hero-fruit.svg";
 import GameContext from "../Context/GameContext/GameContext";
 import "./clicker.scss";
 
 export const Clicker: React.FC = () => {
-  const { handleClick, taps, handleTouch, lengthMultiTap } = useContext(GameContext);
+  const { taps, handleTouch, lengthMultiTap } = useContext(GameContext);
   
-  const [isTouch, setIsTouch] = useState<boolean>(false);
+  // const [isTouch, setIsTouch] = useState<boolean>(false);
 
   // Обработка касания
   const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
-    setIsTouch(true);
+    // setIsTouch(true);
     handleTouch(e);
   };
 
   // Обработка клика
-  const handleClickInternal = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!isTouch) {
-      handleClick(e);
-    }
-  };
+  // const handleClickInternal = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (!isTouch) {
+  //     handleClick(e);
+  //   }
+  // };
 
-  // Сброс состояния касания при выходе из кнопки
-  const handleTouchEnd = () => {
-    setIsTouch(false);
-  };
+  // // Сброс состояния касания при выходе из кнопки
+  // const handleTouchEnd = () => {
+  //   setIsTouch(false);
+  // };
 
   return (
     <div className="clicker">
       <h1>{lengthMultiTap}</h1>
       <button
         className="clicker__button"
-        onClick={handleClickInternal}
+        // onClick={handleClickInternal}
         onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+        // onTouchEnd={handleTouchEnd}
       >
         <ImageHeroFruit />
       </button>

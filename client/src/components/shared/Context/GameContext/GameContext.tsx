@@ -24,50 +24,55 @@ export const GameProvider = ({ children }: GameContextProps) => {
   const [coin, setCoin] = useState(initialState.coin);
   const [energy, setEnergy] = useState(initialState.energy);
   const [taps, setTaps] = useState<TapIndicator[]>([]);
-  const [lengthMultiTap, setLengthMultiTap] = useState(initialState.lengthMultiTap);
+  const [lengthMultiTap, setLengthMultiTap] = useState(
+    initialState.lengthMultiTap
+  );
+  const handleClick = () => {}
+  // const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
+  //   setLengthMultiTap(e.touches.length);
+  //   const rect = e.currentTarget.getBoundingClientRect();
+  //   const newTap = {
+  //     id: Date.now() + Math.random(),
+  //     x: e.touches[1].clientX - rect.left,
+  //     y: e.touches[1].clientY - rect.top,
+  //     count: e.touches.length,
+  //   };
+  //   setTaps([...taps, newTap]);
+  // };
 
-  const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
-    setLengthMultiTap(e.touches.length);
-    const rect = e.currentTarget.getBoundingClientRect();
-    const newTap = {
-      id: Date.now() + Math.random(),
-      x: e.touches[1].clientX - rect.left,
-      y: e.touches[1].clientY - rect.top,
-      count: e.touches.length,
-    };
-    setTaps([...taps, newTap]);
-  };
+  const handleTouch = useCallback(
+    (event: React.TouchEvent<HTMLButtonElement>) => {
+      setLengthMultiTap(event.touches.length);
+      if (energy.valueEnergy > 0) {
+        setCoin((prevCoins) => prevCoins + lengthMultiTap);
+        setEnergy((prevEnergy) => {
+          const newValueEnergy = prevEnergy.valueEnergy - lengthMultiTap;
+          const newValueEnergyPercent = Math.floor(
+            (newValueEnergy * 100) / START_VALUE_ENERGY
+          );
 
-  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    if (energy.valueEnergy > 0) {
-      setCoin((prevCoins) => prevCoins + lengthMultiTap);
-      setEnergy((prevEnergy) => {
-        const newValueEnergy = prevEnergy.valueEnergy - lengthMultiTap;
-        const newValueEnergyPercent = Math.floor(
-          (newValueEnergy * 100) / START_VALUE_ENERGY
-        );
+          return {
+            valueEnergy: newValueEnergy,
+            valueEnergyPercent: newValueEnergyPercent,
+          };
+        });
 
-        return {
-          valueEnergy: newValueEnergy,
-          valueEnergyPercent: newValueEnergyPercent,
+        const rect = event.currentTarget.getBoundingClientRect();
+        const newTap = {
+          id: Date.now() + Math.random(),
+          x: event.touches[1].clientX - rect.left,
+          y: event.touches[1].clientY - rect.top,
+          count: event.touches.length,
         };
-      });
+        setTaps((prevTaps) => [...prevTaps, newTap]);
 
-      const rect = event.currentTarget.getBoundingClientRect();
-      const newTap: TapIndicator = {
-        id: Date.now() + Math.random(), // уникальный ID
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-        count: 1,
-      };
-
-      setTaps((prevTaps) => [...prevTaps, newTap]);
-
-      setTimeout(() => {
-        setTaps((prevTaps) => prevTaps.filter((tap) => tap.id !== newTap.id));
-      }, 2000);
-    }
-  }, [energy.valueEnergy, lengthMultiTap]);
+        setTimeout(() => {
+          setTaps((prevTaps) => prevTaps.filter((tap) => tap.id !== newTap.id));
+        }, 2000);
+      }
+    },
+    [energy.valueEnergy, lengthMultiTap]
+  );
 
   useEffect(() => {
     const energyInterval = setInterval(() => {
