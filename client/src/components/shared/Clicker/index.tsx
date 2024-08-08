@@ -4,11 +4,11 @@ import GameContext from "../Context/GameContext/GameContext";
 import "./clicker.scss";
 
 export const Clicker: React.FC = () => {
-  const { taps, handleTouch } = useContext(GameContext);
+  const { taps, handleTouch, handleClick } = useContext(GameContext);
 
   return (
     <div className="clicker">
-      <button className="clicker__button" onTouchStart={handleTouch}>
+      <button className="clicker__button" onTouchStart={handleTouch} onClick={handleClick}>
         <ImageHeroFruit />
       </button>
       {taps.length > 0 &&

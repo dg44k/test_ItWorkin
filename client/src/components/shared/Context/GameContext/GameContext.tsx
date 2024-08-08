@@ -11,6 +11,7 @@ const initialState: GameContextType = {
     valueEnergyPercent: constantsValues.START_VALUE_PERCENT_ENERGY,
   },
   handleTouch: () => {},
+  handleClick: () => {},
   taps: [],
 };
 const GameContext = createContext<GameContextType>(initialState);
@@ -56,12 +57,47 @@ export const GameProvider = ({ children }: GameContextProps) => {
     [energy.valueEnergy, setCoin, setEnergy]
   );
 
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (energy.valueEnergy > 0) {
+        setCoin((prevCoins: number) => prevCoins + 1);
+        setEnergy((prevEnergy) => {
+          const newValueEnergy = prevEnergy.valueEnergy - 1;
+          const newValueEnergyPercent = Math.floor(
+            (newValueEnergy * 100) / constantsValues.START_VALUE_ENERGY
+          );
+
+          return {
+            valueEnergy: newValueEnergy,
+            valueEnergyPercent: newValueEnergyPercent,
+          };
+        });
+
+        const rect = event.currentTarget.getBoundingClientRect();
+
+        const newTap = {
+          id: Date.now(),
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          count: 1,
+        };
+        setTaps((prevTaps) => [...prevTaps, newTap]);
+
+        setTimeout(() => {
+          setTaps((prevTaps) => prevTaps.filter((tap) => tap.id !== newTap.id));
+        }, 2000);
+      }
+    },
+    [energy.valueEnergy, setCoin, setEnergy]
+  );
+
   return (
     <GameContext.Provider
       value={{
         coin,
         energy,
         handleTouch,
+        handleClick,
         taps,
       }}
     >
