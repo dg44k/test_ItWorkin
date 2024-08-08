@@ -12,7 +12,7 @@ const api = axios.create({
 
 export const getGameData = async () => {
   try {
-    const response = await api.get('/user_entry_check/0');
+    const response = await api.get('/user_entry_check/');
     return response.data;
   } catch (error) {
     console.error('Error fetching game data:', error);
@@ -22,7 +22,7 @@ export const getGameData = async () => {
 
 export const createGameData = async (data: GameDataType) => {
   try {
-    const response = await api.post(`/user_exit/${0}`, data);
+    const response = await api.post(`/user_exit/`, data);
     return response.data;
   } catch (error) {
     console.error('Error updating game data:', error);

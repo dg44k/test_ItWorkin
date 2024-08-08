@@ -1,7 +1,8 @@
 import { Telegraf, Markup, Context } from "telegraf";
 
-const token = "7480673844:AAGi0IdX6ULIyLjJsXjrsbMxionAAd-uN_0";
-const webAppUrl = "https://clicker-fruit.vercel.app/";
+
+const token = import.meta.env.BOT;
+const webAppUrl = import.meta.env.WEBAPP_URL;
 
 const bot = new Telegraf(token);
 
@@ -15,3 +16,12 @@ bot.command("start", (ctx: Context) => {
 });
 
 bot.launch();
+
+bot.command("close", (ctx: Context) => {
+	ctx.reply(
+		"Добро пожаловать! Нажмите на кнопку ниже, чтобы запустить приложение",
+		Markup.keyboard([
+			Markup.button.webApp("Отправить сообщение", `${webAppUrl}/feedback`),
+		])
+	);
+});
